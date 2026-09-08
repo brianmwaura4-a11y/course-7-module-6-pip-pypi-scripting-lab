@@ -2,12 +2,9 @@ from datetime import datetime
 import requests
 
 
-def generate_log():
-    log_data = [
-        "User logged in",
-        "User updated profile",
-        "Report exported"
-    ]
+def generate_log(log_data):
+    if not isinstance(log_data, list):
+        raise ValueError("log_data must be a list")
 
     filename = f"log_{datetime.now().strftime('%Y%m%d')}.txt"
 
@@ -16,6 +13,7 @@ def generate_log():
             file.write(f"{entry}\n")
 
     print(f"Log written to {filename}")
+    return filename
 
 
 def fetch_data():
@@ -30,7 +28,13 @@ def fetch_data():
 
 
 if __name__ == "__main__":
-    generate_log()
+    log_data = [
+        "User logged in",
+        "User updated profile",
+        "Report exported"
+    ]
+    
+    filename = generate_log(log_data)
 
     post = fetch_data()
 
